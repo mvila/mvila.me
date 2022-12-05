@@ -1,4 +1,0 @@
-{
-  "@import": "aws/s3-hosted-website#^0.1.0",
-  "immutableFiles": ["**/*.immutable.*"]
-}

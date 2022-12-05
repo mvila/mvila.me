@@ -1,0 +1,12 @@
+{
+  "type": "website",
+  "provider": "aws",
+  "domainName": "mvila.me",
+  "files": ["./src"],
+  "aws": {
+    "region": "us-west-2",
+    "cloudFront": {
+      "priceClass": "PriceClass_100"
+    }
+  }
+}
