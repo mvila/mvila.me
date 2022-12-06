@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg1791"
+   width="1280"
+   height="746.66669"
+   viewBox="0 0 1280 746.66669"
+   sodipodi:docname="home.inksape.svg"
+   inkscape:version="1.2.1 (9c6d41e, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1795" />
+  <sodipodi:namedview
+     id="namedview1793"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="0.72421875"
+     inkscape:cx="654.49838"
+     inkscape:cy="499.15858"
+     inkscape:window-width="1921"
+     inkscape:window-height="1049"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="g1799">
+    <inkscape:page
+       x="0"
+       y="0"
+       id="page1797"
+       width="1280"
+       height="746.66669" />
+  </sodipodi:namedview>
+  <g
+     id="g1799"
+     inkscape:groupmode="layer"
+     inkscape:label="Page 1"
+     transform="matrix(1.3333333,0,0,-1.3333333,0,746.66667)">
+    <path
+       d="M 0,0 H 960 V 560 H 0 Z"
+       style="fill:#171717;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       id="path1801" />
+    <text
+       xml:space="preserve"
+       transform="matrix(1,0,0,-1,35.7739,512.7744)"
+       style="font-variant:normal;font-weight:300;font-stretch:normal;font-size:20px;font-family:'DIN Light';-inkscape-font-specification:DIN-Light;writing-mode:lr-tb;fill:#dddddd;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       id="text1805"><tspan
+         x="0 16.360001 26.84 38.02 49.200001 59.66 65.400002 70.5 81.18 86.080002 91.82"
+         y="0"
+         sodipodi:role="line"
+         id="tspan1803">Manuel Vila</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="scale(1,-1)"
+       style="font-variant:normal;font-weight:300;font-stretch:normal;font-size:72px;font-family:'DIN Light';-inkscape-font-specification:DIN-Light;writing-mode:lr-tb;fill:#aeee00;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       id="text1813"
+       x="361.76566"
+       y="-385.16217"><tspan
+         x="361.76566"
+         y="-385.16217"
+         style="fill:#aeee00;fill-opacity:1"
+         sodipodi:role="line"
+         id="tspan30274">github</tspan><tspan
+         x="361.76566"
+         y="-292.89478"
+         style="fill:#01b0f0;fill-opacity:1"
+         sodipodi:role="line"
+         id="tspan30290">twitter</tspan><tspan
+         x="361.76566"
+         y="-200.62737"
+         style="fill:#ff9800;fill-opacity:1"
+         sodipodi:role="line"
+         id="tspan30294">polywork</tspan><tspan
+         x="361.76566"
+         y="-108.35997"
+         style="fill:#ff4081;fill-opacity:1"
+         sodipodi:role="line"
+         id="tspan31024">email</tspan><tspan
+         x="361.76566"
+         y="-16.092567"
+         style="fill:#ff358b;fill-opacity:1"
+         sodipodi:role="line"
+         id="tspan30280" /><tspan
+         x="361.76566"
+         y="76.174835"
+         style="fill:#ff358b;fill-opacity:1"
+         sodipodi:role="line"
+         id="tspan30282" /><tspan
+         y="-39.562164"
+         x="350.53366 389.41367 407.05365 430.45364 470.70166 510.94968"
+         id="tspan28153"
+         sodipodi:role="line"
+         style="fill:#01b0f0;fill-opacity:1" /></text>
+  </g>
+</svg>
