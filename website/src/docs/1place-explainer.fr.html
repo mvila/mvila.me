@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>1Place</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="data:," />
+
+    <script defer data-domain="mvila.me" src="https://plausible.io/js/script.js"></script>
+
+    <script>
+      const storedTheme = localStorage.getItem('theme');
+      if (storedTheme === 'light' || storedTheme === 'dark') {
+        document.documentElement.dataset.theme = storedTheme;
+      }
+    </script>
+
+    <style>
+      :root {
+        color-scheme: light dark;
+        --background: light-dark(#faf6f0, #1e1b18);
+        --text: light-dark(#383530, #d8d1c6);
+        --heading: light-dark(#282621, #ece6dc);
+        --selection: light-dark(#ecdcc4, #4a4036);
+        --link: light-dark(#884000, #ffc796);
+      }
+
+      :root[data-theme='light'] {
+        color-scheme: light;
+      }
+
+      :root[data-theme='dark'] {
+        color-scheme: dark;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--background);
+        color: var(--text);
+        font-family: 'Hanken Grotesk', system-ui, sans-serif;
+        transition:
+          background-color 0.25s ease,
+          color 0.25s ease;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      main {
+        max-width: calc(700px + 3rem);
+        margin-inline: auto;
+        padding: clamp(2.5rem, 10vw, 5rem) 1.5rem 5rem;
+      }
+
+      h1 {
+        font-size: 44px;
+        line-height: 50px;
+        font-weight: 700;
+        color: var(--heading);
+        text-wrap: balance;
+        margin: 0 0 0.75em;
+      }
+
+      h2 {
+        font-size: 28px;
+        line-height: 31px;
+        font-weight: 600;
+        color: var(--heading);
+        text-wrap: balance;
+        margin: 1.25em 0 0.6em;
+      }
+
+      p {
+        font-size: 20px;
+        line-height: 30px;
+        text-wrap: pretty;
+        margin: 0 0 1.2em;
+      }
+
+      a {
+        color: var(--link);
+        text-decoration-color: color-mix(in srgb, var(--link) 45%, transparent);
+        text-underline-offset: 0.15em;
+      }
+
+      a:hover {
+        text-decoration-color: var(--link);
+      }
+
+      code {
+        font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+        font-size: 0.9em;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      figure {
+        margin: 0 0 1.2em;
+      }
+
+      figure svg {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin-inline: auto;
+      }
+
+      #theme-toggle,
+      #language-toggle {
+        position: fixed;
+        top: 1.25rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        display: grid;
+        place-items: center;
+        padding: 0;
+        border: 1px solid color-mix(in srgb, var(--text) 25%, transparent);
+        border-radius: 50%;
+        background: var(--background);
+        color: var(--text);
+        cursor: pointer;
+      }
+
+      #theme-toggle {
+        right: 1.25rem;
+      }
+
+      #language-toggle {
+        right: 4.25rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        text-decoration: none;
+      }
+
+      #theme-toggle svg {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+
+      #theme-toggle .icon-sun {
+        display: none;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme='light']) #theme-toggle .icon-sun {
+          display: block;
+        }
+        :root:not([data-theme='light']) #theme-toggle .icon-moon {
+          display: none;
+        }
+      }
+
+      :root[data-theme='dark'] #theme-toggle .icon-sun {
+        display: block;
+      }
+
+      :root[data-theme='dark'] #theme-toggle .icon-moon {
+        display: none;
+      }
+
+      #theme-toggle:hover,
+      #language-toggle:hover {
+        border-color: var(--text);
+      }
+
+      @media (max-width: 980px) {
+        #theme-toggle,
+        #language-toggle {
+          position: absolute;
+        }
+
+        main {
+          padding-top: 5rem;
+        }
+      }
+
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 34px;
+          line-height: 38px;
+        }
+
+        h2 {
+          font-size: 23px;
+          line-height: 27px;
+        }
+
+        p {
+          font-size: 17px;
+          line-height: 26px;
+        }
+      }
+
+      ::selection {
+        background: var(--selection);
+      }
+    </style>
+  </head>
+
+  <body>
+    <a id="language-toggle" href="1place-explainer.en.html" hreflang="en" rel="alternate">en</a>
+    <button id="theme-toggle" type="button" aria-label="Changer de thème">
+      <svg
+        class="icon-sun"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="4" />
+        <path
+          d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+        />
+      </svg>
+      <svg
+        class="icon-moon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+      </svg>
+    </button>
+
+    <main>
+      <h1>1Place</h1>
+      <p><em>Première plateforme ouverte, construite sur le registre <a href="./ename-explainer.fr.html">Ename</a> : un socle commun (comptes, partage, recherche, facturation) sous toutes les apps, qu&#39;on emporte avec soi quand on change de plateforme.</em></p>
+      <p>En ligne, pour échanger avec quelqu&#39;un, il faut d&#39;abord avoir les mêmes outils que lui. Entre un téléphone Android et un iPhone, la vidéo passe mal et l&#39;album partagé refuse de s&#39;ouvrir. Une réunion entre deux entreprises commence par choisir l&#39;outil, Zoom, Meet ou Teams, avant les premiers mots. Dans la vie réelle, on parle à qui l&#39;on croise sans vérifier sa marque de téléphone ni ses outils ; en ligne, on le fait à chaque fois.</p>
+      <p>Les affaires d&#39;une même personne se dispersent de la même façon. Un voyage laisse ses photos sur le téléphone et sur Instagram, ses billets dans la boîte mail, sa réservation dans une autre app, ses échanges dans WhatsApp ; un projet de travail éparpille ses discussions entre le mail et Slack, ses notes dans Notion, ses maquettes dans Figma, son contrat dans un outil encore différent. Impossible de réunir le voyage entier, ou le projet entier, au même endroit : chaque morceau reste prisonnier de l&#39;app qui l&#39;a créé.</p>
+      <p>Une même cause, des deux côtés : chaque app est un silo. Refermé sur lui-même, il éparpille ce qu&#39;on y dépose ; refermé aux autres, il sépare ceux qui n&#39;ont pas choisi les mêmes outils.</p>
+      <h2>Le socle</h2>
+      <p>Une app tient en deux étages. En haut, le contenu : une photo, une vidéo, un tableur, un document. C&#39;est ce qui distingue une app d&#39;une autre. En bas, tout le reste : comptes, partage, recherche, notifications, facturation et paiement, y compris la façon de ranger ses affaires en dossiers. Cet étage du bas, le socle, est le même partout : d&#39;une app à l&#39;autre, ce sont les mêmes fonctions, juste repeintes. On n&#39;a donc pas cent apps différentes, mais cent fois la même : autant de socles identiques reconstruits chacun dans son coin, avec un contenu différent par-dessus.</p>
+      <p>Les plateformes fermées ont très bien bâti ce socle. Chez Apple, Google ou Microsoft, les appareils se reconnaissent, le partage tient en un geste, les affaires se rangent seules. Le confort est réel, mais il s&#39;arrête à leurs murs : en sortir, c&#39;est tout laisser derrière soi. À l&#39;inverse, les apps indépendantes sont libres, mais chacune refait le socle pour son compte, et cette liberté se paie en dispersion.</p>
+      <p>1Place bâtit ce socle une fois, le met en commun et le glisse sous toutes les apps. Une app n&#39;a plus alors qu&#39;un rôle : afficher et modifier son contenu. Tout le reste ne lui appartient plus : c&#39;est le socle commun, le même partout. On retrouve le confort des plateformes fermées, mais étendu à toutes les apps.</p>
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" width="680" height="200" viewBox="0 0 680 200" role="img" font-family="'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif">
+          <title>Le socle : aujourd'hui et avec 1Place</title>
+          <desc>Aujourd'hui, trois apps (photos, vidéos, documents) reposent chacune sur leur propre socle, identique trois fois. Avec 1Place, les trois contenus reposent sur un seul socle commun.</desc>
+          <style>
+            /* Static fallback first, then a light-dark() override so each color follows
+               the host page's light or dark scheme. .title binds to the page's --heading
+               once inlined, falling back to that color standalone, so diagram titles
+               track the HTML headings. */
+            .title { fill: light-dark(#282621, #ece6dc); fill: var(--heading, light-dark(#282621, #ece6dc)); }
+            .content-box { fill: #f0e9db; stroke: #d3c8b4; fill: light-dark(#f0e9db, #2b2722); stroke: light-dark(#d3c8b4, #443f38); }
+            .content-label { fill: #383530; fill: light-dark(#383530, #d8d1c6); }
+            .socle-box { fill: #ecdcc4; stroke: #884000; fill: light-dark(#ecdcc4, #4a4036); stroke: light-dark(#884000, #ffc796); }
+            .socle-label { fill: #884000; fill: light-dark(#884000, #ffc796); }
+            .arrow { stroke: #8a8173; stroke: light-dark(#6e6759, #a89d8c); }
+          </style>
+          <defs>
+            <marker id="arrow-d0" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path class="arrow" d="M2 1L8 5L2 9" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </marker>
+          </defs>
+          <text x="40" y="50" font-size="14" font-weight="600" class="title">Aujourd'hui</text>
+          <text x="368" y="50" font-size="14" font-weight="600" class="title">Avec 1Place</text>
+          <g class="content-box" stroke-width="0.75">
+            <rect x="40" y="64" width="86" height="64" rx="4"/>
+            <rect x="133" y="64" width="86" height="64" rx="4"/>
+            <rect x="226" y="64" width="86" height="64" rx="4"/>
+            <rect x="368" y="64" width="86" height="64" rx="4"/>
+            <rect x="461" y="64" width="86" height="64" rx="4"/>
+            <rect x="554" y="64" width="86" height="64" rx="4"/>
+          </g>
+          <g class="content-label" font-size="14" text-anchor="middle">
+            <text x="83" y="101">Photos</text>
+            <text x="176" y="101">Vidéos</text>
+            <text x="269" y="101">Documents</text>
+            <text x="411" y="101">Photos</text>
+            <text x="504" y="101">Vidéos</text>
+            <text x="597" y="101">Documents</text>
+          </g>
+          <g class="socle-box" stroke-width="0.75">
+            <rect x="40" y="134" width="86" height="36" rx="4"/>
+            <rect x="133" y="134" width="86" height="36" rx="4"/>
+            <rect x="226" y="134" width="86" height="36" rx="4"/>
+            <rect x="368" y="134" width="272" height="36" rx="4"/>
+          </g>
+          <g class="socle-label" font-size="14" font-weight="600" text-anchor="middle">
+            <text x="83" y="157">Socle</text>
+            <text x="176" y="157">Socle</text>
+            <text x="269" y="157">Socle</text>
+            <text x="504" y="157">Socle commun</text>
+          </g>
+          <line x1="324" y1="117" x2="352" y2="117" class="arrow" stroke-width="1.5" marker-end="url(#arrow-d0)"/>
+        </svg>
+      </figure>
+      <p>Tout se rejoint. Le voyage et le projet de travail se rassemblent chacun au même endroit, leurs morceaux réunis même s&#39;ils vivent toujours dans dix apps différentes.</p>
+      <h2>L&#39;ouverture</h2>
+      <p>Un socle commun sous toutes les apps pourrait ressembler au mur ultime. Un mur sert à deux choses : tenir les autres dehors et retenir les siens dedans. Mais ce socle ne fait ni l&#39;un ni l&#39;autre, car ni le registre où chacun est inscrit ni les formats partagés n&#39;appartiennent à 1Place. Ils relèvent d&#39;<a href="./ename-explainer.fr.html">Ename</a>, commun à toutes les plateformes et contrôlé par aucune, tenu par une organisation à but non lucratif.</p>
+      <p>Personne n&#39;est tenu dehors. Chacun figure au même registre : on peut joindre n&#39;importe qui sans être sur sa plateforme, comme un mail arrive quel que soit le fournisseur. L&#39;ami sur un autre téléphone, la réunion entre deux entreprises : plus besoin d&#39;avoir les mêmes outils pour se joindre.</p>
+      <p>Personne n&#39;est retenu dedans. Le jour où 1Place ne convient plus, on emporte tout son socle chez un concurrent, dans des formats qu&#39;il sait lire. Les contenus, eux, n&#39;ont pas à suivre : ils vivent dans les apps, pas chez 1Place. On part sans rien perdre.</p>
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" width="680" height="192" viewBox="0 0 680 192" role="img" font-family="'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif">
+          <title>L'ouverture : joindre qui l'on veut, partir quand on veut</title>
+          <desc>1Place et une autre plateforme, chacune avec son socle, reposent sur Ename, registre et formats partagés. Une flèche relie les deux plateformes (joindre qui l'on veut) ; une flèche emporte le socle de 1Place vers l'autre plateforme (partir quand on veut).</desc>
+          <style>
+            /* Static fallback first, then a light-dark() override so each color follows
+               the host page's light or dark scheme. .title binds to the page's --heading
+               once inlined, falling back to that color standalone, so diagram titles
+               track the HTML headings. */
+            .title { fill: light-dark(#282621, #ece6dc); fill: var(--heading, light-dark(#282621, #ece6dc)); }
+            .content-box { fill: #f0e9db; stroke: #d3c8b4; fill: light-dark(#f0e9db, #2b2722); stroke: light-dark(#d3c8b4, #443f38); }
+            .content-label { fill: #383530; fill: light-dark(#383530, #d8d1c6); }
+            .socle-box { fill: #ecdcc4; stroke: #884000; fill: light-dark(#ecdcc4, #4a4036); stroke: light-dark(#884000, #ffc796); }
+            .socle-label { fill: #884000; fill: light-dark(#884000, #ffc796); }
+            .arrow { stroke: #8a8173; stroke: light-dark(#6e6759, #a89d8c); }
+            .ename-box { fill: none; stroke: #7d7568; stroke: light-dark(#383530, #d8d1c6); }
+          </style>
+          <defs>
+            <marker id="arrow-d1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path class="arrow" d="M2 1L8 5L2 9" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </marker>
+          </defs>
+          <g class="content-box" stroke-width="0.75">
+            <rect x="40" y="40" width="220" height="84" rx="4"/>
+            <rect x="420" y="40" width="220" height="84" rx="4"/>
+          </g>
+          <g class="content-label" font-size="14" font-weight="600" text-anchor="middle">
+            <text x="150" y="74">1Place</text>
+            <text x="530" y="74">Une autre plateforme</text>
+          </g>
+          <g class="socle-box" stroke-width="0.75">
+            <rect x="48" y="98" width="204" height="18" rx="3"/>
+            <rect x="428" y="98" width="204" height="18" rx="3"/>
+          </g>
+          <g class="socle-label" font-size="12" font-weight="600" text-anchor="middle">
+            <text x="150" y="111">Socle</text>
+            <text x="530" y="111">Socle</text>
+          </g>
+          <g class="title" font-size="12" text-anchor="middle">
+            <text x="340" y="56">Joindre qui l'on veut</text>
+            <text x="340" y="94">Partir quand on veut</text>
+          </g>
+          <line x1="268" y1="70" x2="412" y2="70" class="arrow" stroke-width="1.5" marker-start="url(#arrow-d1)" marker-end="url(#arrow-d1)"/>
+          <line x1="256" y1="107" x2="424" y2="107" class="arrow" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-d1)"/>
+          <rect x="40" y="132" width="600" height="36" rx="4" class="ename-box" stroke-width="1"/>
+          <text x="340" y="154" font-size="14" class="title" text-anchor="middle"><tspan font-weight="600">Ename</tspan><tspan> - registre et formats partagés</tspan></text>
+        </svg>
+      </figure>
+      <p>Joindre qui l&#39;on veut, partir quand on veut : voilà ce qui fait de 1Place une plateforme ouverte, et non un mur de plus.</p>
+      <h2>L&#39;économie</h2>
+      <p>De quoi vit une plateforme qui ne retient personne et n&#39;enferme rien ? En réunissant toutes les apps sous un même socle, 1Place voit tout ce qu&#39;on y fait : ce qu&#39;on partage, ce qu&#39;on cherche, ce qu&#39;on consulte. Cela a de quoi inquiéter : c&#39;est un pouvoir énorme, dont elle pourrait abuser. C&#39;est pourquoi 1Place se limite, par contrat, à un rôle d&#39;intermédiaire technique : au-delà de ce qu&#39;exige le service, elle s&#39;interdit d&#39;exploiter ce qu&#39;elle voit. La publicité et la revente de données ne peuvent donc pas la faire vivre.</p>
+      <p>L&#39;abonnement ne convient pas mieux : on paie d&#39;avance, qu&#39;on s&#39;en serve ou non, et il faut s&#39;abonner à chaque app séparément, autant de barrières que 1Place veut justement supprimer. Reste le paiement à l&#39;usage.</p>
+      <p>Un seul compte et une seule carte, chez 1Place : c&#39;est elle qui paie les apps, chacune selon l&#39;usage qu&#39;on en fait. N&#39;importe quelle app s&#39;ouvre alors en un clic, sans créer de compte, et la pile d&#39;apps cesse d&#39;être un fardeau. À la fin du mois, une seule facture, et un plafond qu&#39;on fixe soi-même : pas de mauvaise surprise.</p>
+      <p>Ce paiement ne s&#39;arrête pas aux apps : il s&#39;étend aux contenus publics, ceux qu&#39;on publie pour tous. Lire, écouter, regarder : à chaque fois, une part revient au créateur de ce qu&#39;on consulte.</p>
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" width="680" height="192" viewBox="0 0 680 192" role="img" font-family="'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif">
+          <title>L'économie : une seule facture, redistribuée à l'usage</title>
+          <desc>L'utilisateur règle une seule facture à 1Place, intermédiaire technique, qui paie les apps selon l'usage et reverse une part aux créateurs de ce qu'on consulte.</desc>
+          <style>
+            /* Static fallback first, then a light-dark() override so each color follows
+               the host page's light or dark scheme. */
+            .content-box { fill: #f0e9db; stroke: #d3c8b4; fill: light-dark(#f0e9db, #2b2722); stroke: light-dark(#d3c8b4, #443f38); }
+            .content-label { fill: #383530; fill: light-dark(#383530, #d8d1c6); }
+            .content-sublabel { fill: #7d7568; fill: light-dark(#6e6759, #a89d8c); }
+            .arrow { stroke: #8a8173; stroke: light-dark(#6e6759, #a89d8c); }
+          </style>
+          <defs>
+            <marker id="arrow-d2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path class="arrow" d="M2 1L8 5L2 9" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </marker>
+          </defs>
+          <g class="content-box" stroke-width="0.75">
+            <rect x="40" y="78" width="150" height="52" rx="4"/>
+            <rect x="230" y="78" width="170" height="52" rx="4"/>
+            <rect x="440" y="40" width="200" height="52" rx="4"/>
+            <rect x="440" y="116" width="200" height="52" rx="4"/>
+          </g>
+          <g class="content-label" font-size="14" font-weight="600" text-anchor="middle">
+            <text x="115" y="99">L'utilisateur</text>
+            <text x="315" y="99">1Place</text>
+            <text x="540" y="61">Les apps</text>
+            <text x="540" y="137">Les créateurs</text>
+          </g>
+          <g class="content-sublabel" font-size="12" text-anchor="middle">
+            <text x="115" y="116">une seule facture</text>
+            <text x="315" y="116">intermédiaire technique</text>
+            <text x="540" y="78">payées selon l'usage</text>
+            <text x="540" y="154">une part par consultation</text>
+          </g>
+          <g class="arrow" stroke-width="1.5" fill="none">
+            <line x1="194" y1="104" x2="224" y2="104" marker-end="url(#arrow-d2)"/>
+            <line x1="404" y1="94" x2="434" y2="68" marker-end="url(#arrow-d2)"/>
+            <line x1="404" y1="114" x2="434" y2="140" marker-end="url(#arrow-d2)"/>
+          </g>
+        </svg>
+      </figure>
+      <p>Ailleurs, l&#39;attention se vend aux annonceurs ; ici, elle rémunère ceux qui la suscitent. L&#39;utilisateur n&#39;est plus le produit, ni même un simple client : il devient le moteur d&#39;une économie où ce qu&#39;il consomme fait vivre ceux qui le créent.</p>
+      <h2>L&#39;enjeu</h2>
+      <p>Maintenant que le socle est commun et les contenus libérés des silos, une question s&#39;ouvre : à quoi cette plateforme peut-elle ressembler ?</p>
+      <p>Le socle range déjà nos affaires en dossiers : un environnement de travail s&#39;y dessine, sans qu&#39;on ait rien ajouté. Le mouvement est commencé ; on peut le prolonger.</p>
+      <p>Une fonction pour envoyer un contenu en privé, et voilà une messagerie, un jour peut-être un remplaçant du mail. Une fonction pour suivre quelqu&#39;un, une vue qui rassemble ce que publient ceux qu&#39;on suit, et voilà un réseau social ; et c&#39;est le contenu qui fait le réseau : du texte court donne un X, des photos un Instagram, des vidéos un YouTube. Rassembler la musique, et voilà un Spotify ; les films et les séries, un Netflix. Et ainsi de suite.</p>
+      <figure>
+        <svg xmlns="http://www.w3.org/2000/svg" width="680" height="220" viewBox="0 0 680 220" role="img" font-family="'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif">
+          <title>L'enjeu : une fonction posée sur le socle commun reproduit un géant</title>
+          <desc>Quatre piles sur le socle commun : ranger des documents donne un workspace, suivre du texte court un X, suivre des vidéos un YouTube, rassembler la musique un Spotify. Des points de suspension suggèrent la suite.</desc>
+          <style>
+            /* Static fallback first, then a light-dark() override so each color follows
+               the host page's light or dark scheme. .title binds to the page's --heading
+               once inlined, falling back to that color standalone, so diagram titles
+               track the HTML headings. */
+            .title { fill: light-dark(#282621, #ece6dc); fill: var(--heading, light-dark(#282621, #ece6dc)); }
+            .content-box { fill: #f0e9db; stroke: #d3c8b4; fill: light-dark(#f0e9db, #2b2722); stroke: light-dark(#d3c8b4, #443f38); }
+            .content-label { fill: #383530; fill: light-dark(#383530, #d8d1c6); }
+            .content-sublabel { fill: #7d7568; fill: light-dark(#6e6759, #a89d8c); }
+            .socle-box { fill: #ecdcc4; stroke: #884000; fill: light-dark(#ecdcc4, #4a4036); stroke: light-dark(#884000, #ffc796); }
+            .socle-label { fill: #884000; fill: light-dark(#884000, #ffc796); }
+          </style>
+          <g class="title" font-size="14" font-weight="600" text-anchor="middle">
+            <text x="105" y="50">Un workspace</text>
+            <text x="251" y="50">Un X</text>
+            <text x="397" y="50">Un YouTube</text>
+            <text x="543" y="50">Un Spotify</text>
+          </g>
+          <g class="content-box" stroke-width="0.75">
+            <rect x="40" y="62" width="130" height="30" rx="4"/>
+            <rect x="186" y="62" width="130" height="30" rx="4"/>
+            <rect x="332" y="62" width="130" height="30" rx="4"/>
+            <rect x="478" y="62" width="130" height="30" rx="4"/>
+          </g>
+          <g class="content-label" font-size="12" font-weight="600" text-anchor="middle">
+            <text x="105" y="81">Ranger</text>
+            <text x="251" y="81">Suivre</text>
+            <text x="397" y="81">Suivre</text>
+            <text x="543" y="81">Rassembler</text>
+          </g>
+          <g class="content-box" stroke-width="0.75">
+            <rect x="40" y="98" width="130" height="56" rx="4"/>
+            <rect x="186" y="98" width="130" height="56" rx="4"/>
+            <rect x="332" y="98" width="130" height="56" rx="4"/>
+            <rect x="478" y="98" width="130" height="56" rx="4"/>
+          </g>
+          <g class="content-label" font-size="14" text-anchor="middle">
+            <text x="105" y="130">Documents</text>
+            <text x="251" y="130">Texte court</text>
+            <text x="397" y="130">Vidéos</text>
+            <text x="543" y="130">Musique</text>
+          </g>
+          <text x="622" y="130" font-size="18" class="content-sublabel">…</text>
+          <rect x="40" y="160" width="598" height="36" rx="4" class="socle-box" stroke-width="0.75"/>
+          <text x="339" y="182" font-size="14" font-weight="600" class="socle-label" text-anchor="middle">Socle commun</text>
+        </svg>
+      </figure>
+      <p>On voit alors ce qui se passe. Chacun de ces géants n&#39;était qu&#39;un socle et un type de contenu. 1Place a déjà le socle, en commun, et le contenu est déjà libre : reproduire un géant ne demande plus qu&#39;une fonction posée par-dessus. Rien, nulle part, ne dit où la plateforme devrait s&#39;arrêter. De proche en proche, elle devient le centre de notre vie numérique.</p>
+      <p>Devenir le centre de la vie numérique a toujours voulu dire bâtir le mur le plus haut. Ce centre-ci est le premier qui n&#39;en soit pas un : on peut le quitter en emportant son socle, et il ne peut rien exploiter de ce qu&#39;on y fait. Un centre qu&#39;on peut quitter, c&#39;est ce qu&#39;aucun géant fermé n&#39;a jamais été.</p>
+      <p>L&#39;enjeu est alors immense : des milliards de personnes vivent encore derrière ces murs. Mais les murs sont devenus inutiles, et ce qui est inutile finit toujours par tomber.</p>
+    </main>
+
+    <script>
+      const STRINGS = {
+        fr: {
+          themeLight: 'Activer le mode clair',
+          themeDark: 'Activer le mode sombre',
+          languageToggle: 'View this page in English',
+        },
+        en: {
+          themeLight: 'Switch to light mode',
+          themeDark: 'Switch to dark mode',
+          languageToggle: 'Voir cette page en français',
+        },
+      };
+      const strings = STRINGS[document.documentElement.lang] ?? STRINGS.fr;
+
+      const themeToggle = document.querySelector('#theme-toggle');
+      const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+      function effectiveTheme() {
+        return document.documentElement.dataset.theme ?? (systemDark.matches ? 'dark' : 'light');
+      }
+
+      function renderThemeToggle() {
+        const isDark = effectiveTheme() === 'dark';
+        themeToggle.setAttribute('aria-label', isDark ? strings.themeLight : strings.themeDark);
+      }
+
+      themeToggle.addEventListener('click', () => {
+        const next = effectiveTheme() === 'dark' ? 'light' : 'dark';
+        const system = systemDark.matches ? 'dark' : 'light';
+        if (next === system) {
+          delete document.documentElement.dataset.theme;
+          localStorage.removeItem('theme');
+        } else {
+          document.documentElement.dataset.theme = next;
+          localStorage.setItem('theme', next);
+        }
+        renderThemeToggle();
+      });
+
+      systemDark.addEventListener('change', renderThemeToggle);
+      renderThemeToggle();
+
+      const languageToggle = document.querySelector('#language-toggle');
+      if (languageToggle) {
+        languageToggle.setAttribute('aria-label', strings.languageToggle);
+      }
+    </script>
+  </body>
+</html>

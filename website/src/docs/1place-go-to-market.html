@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>1Place / Go-to-market</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="data:," />
+
+    <script defer data-domain="mvila.me" src="https://plausible.io/js/script.js"></script>
+
+    <script>
+      const storedTheme = localStorage.getItem('theme');
+      if (storedTheme === 'light' || storedTheme === 'dark') {
+        document.documentElement.dataset.theme = storedTheme;
+      }
+    </script>
+
+    <style>
+      :root {
+        color-scheme: light dark;
+        --background: light-dark(#faf6f0, #1e1b18);
+        --text: light-dark(#383530, #d8d1c6);
+        --heading: light-dark(#282621, #ece6dc);
+        --selection: light-dark(#ecdcc4, #4a4036);
+        --link: light-dark(#884000, #ffc796);
+      }
+
+      :root[data-theme='light'] {
+        color-scheme: light;
+      }
+
+      :root[data-theme='dark'] {
+        color-scheme: dark;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--background);
+        color: var(--text);
+        font-family: 'Hanken Grotesk', system-ui, sans-serif;
+        transition:
+          background-color 0.25s ease,
+          color 0.25s ease;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      main {
+        max-width: calc(700px + 3rem);
+        margin-inline: auto;
+        padding: clamp(2.5rem, 10vw, 5rem) 1.5rem 5rem;
+      }
+
+      h1 {
+        font-size: 44px;
+        line-height: 50px;
+        font-weight: 700;
+        color: var(--heading);
+        text-wrap: balance;
+        margin: 0 0 0.75em;
+      }
+
+      h2 {
+        font-size: 28px;
+        line-height: 31px;
+        font-weight: 600;
+        color: var(--heading);
+        text-wrap: balance;
+        margin: 1.25em 0 0.6em;
+      }
+
+      p {
+        font-size: 20px;
+        line-height: 30px;
+        text-wrap: pretty;
+        margin: 0 0 1.2em;
+      }
+
+      a {
+        color: var(--link);
+        text-decoration-color: color-mix(in srgb, var(--link) 45%, transparent);
+        text-underline-offset: 0.15em;
+      }
+
+      a:hover {
+        text-decoration-color: var(--link);
+      }
+
+      code {
+        font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+        font-size: 0.9em;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      figure {
+        margin: 0 0 1.2em;
+      }
+
+      figure svg {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin-inline: auto;
+      }
+
+      #theme-toggle {
+        position: fixed;
+        top: 1.25rem;
+        right: 1.25rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        display: grid;
+        place-items: center;
+        padding: 0;
+        border: 1px solid color-mix(in srgb, var(--text) 25%, transparent);
+        border-radius: 50%;
+        background: var(--background);
+        color: var(--text);
+        cursor: pointer;
+      }
+
+      #theme-toggle svg {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+
+      #theme-toggle .icon-sun {
+        display: none;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme='light']) #theme-toggle .icon-sun {
+          display: block;
+        }
+        :root:not([data-theme='light']) #theme-toggle .icon-moon {
+          display: none;
+        }
+      }
+
+      :root[data-theme='dark'] #theme-toggle .icon-sun {
+        display: block;
+      }
+
+      :root[data-theme='dark'] #theme-toggle .icon-moon {
+        display: none;
+      }
+
+      #theme-toggle:hover {
+        border-color: var(--text);
+      }
+
+      @media (max-width: 868px) {
+        #theme-toggle {
+          position: absolute;
+        }
+
+        main {
+          padding-top: 5rem;
+        }
+      }
+
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 34px;
+          line-height: 38px;
+        }
+
+        h2 {
+          font-size: 23px;
+          line-height: 27px;
+        }
+
+        p {
+          font-size: 17px;
+          line-height: 26px;
+        }
+      }
+
+      ::selection {
+        background: var(--selection);
+      }
+    </style>
+  </head>
+
+  <body>
+    <button id="theme-toggle" type="button" aria-label="Changer de thème">
+      <svg
+        class="icon-sun"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="4" />
+        <path
+          d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+        />
+      </svg>
+      <svg
+        class="icon-moon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+      </svg>
+    </button>
+
+    <main>
+      <h1>1Place / Go-to-market</h1>
+      <p><em>Le réseau social de l&#39;après-X : civilisé, ouvert, et qui ne s&#39;arrête pas là.</em></p>
+      <h2>Le moment</h2>
+      <p>X s&#39;effrite, et aucune alternative ne convainc. Threads rejoue le produit de X sous une autre marque ; Bluesky et Mastodon en décentralisent la mécanique sans en changer l&#39;expérience. Des centaines de millions de personnes veulent partir et n&#39;ont nulle part de mieux où aller.</p>
+      <h2>Le point d&#39;entrée</h2>
+      <p><a href="https://mvila.me/docs/1place-explainer.html">1Place</a> entre par un réseau social, et change deux règles. <strong>Civilisé</strong> : derrière chaque compte, un humain vérifié ; chaque contenu, signé par son auteur. Ni bots, ni faux comptes, ni doute sur qui a publié quoi. <strong>Ouvert</strong> : l&#39;identité appartient à la personne et non à la plateforme (c&#39;est le rôle d&#39;<a href="https://mvila.me/docs/ename-explainer.html">Ename</a>), et l&#39;on quitte 1Place sans rien perdre.</p>
+      <p>Ce n&#39;est pas un X-clone de plus. On y publie le texte court comme l&#39;article long (à la Substack), la photo, la vidéo (à la YouTube), et chaque vue rémunère le créateur. Sans publicité.</p>
+      <p>L&#39;absence de verrou n&#39;est pas une faiblesse, c&#39;est l&#39;aimant : on capte précisément ceux qui fuient les murs, et l&#39;on gagne en étant le meilleur, pas en retenant.</p>
+      <h2>Le vrai pari</h2>
+      <p>Le réseau social n&#39;est qu&#39;un mode d&#39;interaction, notre point d&#39;entrée. Le socle de 1Place en porte d&#39;autres, chacun un géant à lui seul. Échanger en privé, et c&#39;est une messagerie, un successeur possible de l&#39;e-mail. Ranger en dossiers, et c&#39;est un espace de travail à la Google Workspace. Chaque mode d&#39;interaction vaut pour tout type de contenu, que des apps tierces enrichissent encore. Social, messagerie, travail sur un seul compte, là où tout est aujourd&#39;hui éclaté : 1Place devient le centre de la vie numérique. Voilà la taille du pari.</p>
+      <h2>L&#39;économie</h2>
+      <p>Ni publicité, ni revente de données, ni abonnement : on paie à l&#39;usage. Pour un utilisateur moyen, remplacer X et Instagram coûte de l&#39;ordre de 0,80 €/mois ; remplacer Substack et YouTube, environ 1,60 € ; tout remplacer, moins de 2,50 €/mois, les créateurs rémunérés à chaque vue. 1Place prend une commission sur ces flux. Marge fine, très grande échelle : l&#39;économie de place de marché.</p>
+      <h2>Le lancement</h2>
+      <p>Un réseau social qui ouvre vide reste vide. 1Place n&#39;ouvre pas : il se lance. Ce lancement a un nom : <strong>The Big Switch</strong>. Un appel mondial, fixé à une date : quittez X, Instagram et YouTube, tous ensemble, le même jour. Un événement de cette ampleur s&#39;impose aux médias ; un milliard de personnes en entendront parler. Que 5 % franchissent le pas, et le premier jour de 1Place est le plus grand lancement de l&#39;histoire : cinquante millions d&#39;utilisateurs.</p>
+      <p>L&#39;énergie du départ est déjà là. En huit mois, X a perdu 2,7 millions d&#39;utilisateurs rien qu&#39;en France : le plus grand exode national d&#39;Europe. Il a suffi d&#39;un simple appel citoyen, <a href="https://helloquittex.com/">HelloQuitteX</a>, qui n&#39;offrait même pas de destination commune. The Big Switch donne au monde la destination, la date, l&#39;outil.</p>
+      <p>L&#39;outil, chacun le lance pour soi. Il rapatrie contenus et abonnements par les exports que la loi garantit (RGPD, DMA), retisse le graphe social à mesure que les gens arrivent (chacun retrouve ceux qu&#39;il suivait). Si les géants freinent, la migration prend une semaine ou un mois au lieu d&#39;un jour. Peu importe : chaque entrave renforce l&#39;appel.</p>
+      <h2>L&#39;équipe</h2>
+      <p>L&#39;équipe reste à constituer : le <em>nous</em> de ce document, c&#39;est moi, Manuel Vila, ingénieur full-stack à forte sensibilité UX/UI. Depuis trente ans, je développe des applications web, mobiles et desktop de A à Z, en indépendant pour l&#39;essentiel. Tous les rôles : produit, design, architecture, développement, cloud. Et beaucoup d&#39;<a href="https://github.com/mvila">open source</a>.</p>
+      <p>1Place est une obsession de longue date : dès 2007, j&#39;écrivais qu&#39;il fallait <a href="https://kindalabfrench.wordpress.com/">libérer les contenus</a> des plateformes et des apps. Puis dix ans au Japon, où j&#39;ai tenté un premier 1Place, alors orienté B2B. La tentative a échoué : un tel projet ne se démarre pas du Japon. Je suis resté, notamment trois ans comme CTO de la startup <a href="https://en.medmain.com/">Medmain</a>, le temps de rembourser jusqu&#39;au dernier yen le prêt bancaire qui avait financé la tentative. J&#39;ai quitté le pays une semaine après la dernière échéance.</p>
+      <p>Rentrer en France, c&#39;était choisir l&#39;écosystème où démarrer 1Place. C&#39;était aussi un devoir : je tiens aux valeurs de la France et de l&#39;Europe, et elles ne survivront pas sans une puissance technologique pour les porter. 1Place devait naître ici.</p>
+      <p>Aujourd&#39;hui, je construis seul les deux étages du système : <a href="https://mvila.me/docs/ename-explainer.html">Ename</a>, le registre d&#39;identité (association à but non lucratif), et <a href="https://mvila.me/docs/1place-explainer.html">1Place</a> au-dessus. Le pre-seed financera une dizaine de recrutements pour 1Place. Ename, soutenu par 1Place, constituera sa propre équipe.</p>
+      <h2>Le financement</h2>
+      <p>1Place est établie en France. À l&#39;heure où l&#39;Europe cherche sa souveraineté numérique, c&#39;est une plateforme européenne qui vise l&#39;échelle mondiale.</p>
+      <p>La demande est réelle, et elle attire déjà les capitaux : <a href="https://wsocial.news/">W Social</a>, qui arrive avec une promesse voisine (européen, vérifié, ouvert), a levé 2,5 M€. 1Place en est la version plus ambitieuse : une identité Ename portable partout, pas un simple compte ; un modèle qui ne vit pas des données de ses utilisateurs, là où W mise sur la pub ; et un socle qui dépasse de loin le micro-blogging.</p>
+      <p>Nous levons un pre-seed pour construire le réseau social. Si la thèse vous parle, rencontrons-nous.</p>
+    </main>
+
+    <script>
+      const themeToggle = document.querySelector('#theme-toggle');
+      const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+      function effectiveTheme() {
+        return document.documentElement.dataset.theme ?? (systemDark.matches ? 'dark' : 'light');
+      }
+
+      function renderThemeToggle() {
+        const isDark = effectiveTheme() === 'dark';
+        themeToggle.setAttribute(
+          'aria-label',
+          isDark ? 'Activer le mode clair' : 'Activer le mode sombre',
+        );
+      }
+
+      themeToggle.addEventListener('click', () => {
+        const next = effectiveTheme() === 'dark' ? 'light' : 'dark';
+        const system = systemDark.matches ? 'dark' : 'light';
+        if (next === system) {
+          delete document.documentElement.dataset.theme;
+          localStorage.removeItem('theme');
+        } else {
+          document.documentElement.dataset.theme = next;
+          localStorage.setItem('theme', next);
+        }
+        renderThemeToggle();
+      });
+
+      systemDark.addEventListener('change', renderThemeToggle);
+      renderThemeToggle();
+    </script>
+  </body>
+</html>
